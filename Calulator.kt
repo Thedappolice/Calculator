@@ -1,19 +1,23 @@
 package com.project.calculator
 
-import java.lang.Math.*
-
+import kotlin.system.exitProcess
 
 fun main() {
 
+    fun checkType(input: Any) {
+        if (input !is Int) {
+            println("One is unsure if it was an accident, there was text, and onr will not be held\nresponsible for thy foolishness to feed it text when it clearly asked for numbers.\nIn which you failed to deliver, Spectacularly.")
+            exitProcess(1)
+        }
+    }
+
     val calculator = Calculator()
-    var name = ""
-    var number1 = 0
-    var number2 = 0
-    var mode: Int = 0
-    var state = true
+    val name: String
+    var number1: Any
+    var number2: Any
+    var mode: Int
+    var state: Boolean
     var repeat = true
-    var valueBefore = 0
-    var continues = true
 
     println("Before we begin, how may i address you? Enter your preferred name :")
     var input = readln()
@@ -22,57 +26,68 @@ fun main() {
     println("Greetings, $input, welcome to the calculator.")
 
     while (repeat) {
+
+        state = true
+        mode = 0
+        println("Please choose your wanted operation, addition, subtraction, multiplication or division : ")
         while (state) {
-            println("Please choose your wanted fuction, addition, subtraction, multiplication or division : ")
+            print("operation : ")
             input = readln()
             when (input) {
                 "addition" -> {
                     mode = 1
-                    state = false
                 }
 
                 "subtraction" -> {
                     mode = 2
-                    state = false
                 }
 
                 "multiplication" -> {
                     mode = 3
-                    state = false
                 }
 
                 "division" -> {
                     mode = 4
-                    state = false
                 }
 
+
                 else -> {
-                    println("That response in invalid, please try again.\nDo note to type your inputs as specific as stated below:\n - subtraction\n- multiplication\n- division")
+                    println("That response in invalid, please try again.\nDo note to type your inputs as specific as stated below:\n - addition\n - subtraction\n - multiplication\n - division")
                 }
+
+            }
+            if (mode != 0) {
+                state = false
             }
         }
 
-        print("Well then, $input it is, enter 2 numbers to perform the operation.")
+        println("Well then, $input it is, enter 2 numbers to perform the operation.")
+
         println("First number :")
-        number1 = readln().toInt()
+        number1 = readln()
+        checkType(number1)
+        number1 = number1.toFloat()
+
         println("Second number :")
-        number2 = readln().toInt()
+        number2 = readln()
+        checkType(number2)
+        number2 = number2.toFloat()
 
         when (mode) {
             1 -> {
-                valueBefore = calculator.add(number1, number2)
+                calculator.add(number1, number2)
             }
 
             2 -> {
-                valueBefore = calculator.minus(number1, number2)
+                calculator.minus(number1, number2)
             }
 
             3 -> {
-                valueBefore = calculator.multiply(number1, number2)
+                calculator.multiply(number1, number2)
             }
 
             4 -> {
-                valueBefore = calculator.divide(number1, number2)
+                calculator.divide(number1, number2)
             }
         }
 
@@ -95,35 +110,37 @@ fun main() {
                     println("input received is not recognisable, only \'Y\' or \'N\' is accepted.")
                 }
             }
-            if(repeat) {
-                println("Great, well do you still wanna continue the previous result? (Y/N)")
-                input = readln()
-            }
         }
+
     }
 }
 
 class Calculator {
-    public fun add(a: Int, b: Int): Int {
+    fun add(a: Float, b: Float): Float {
         val result = a + b
         println("$a + $b = $result")
         return result
     }
 
-    public fun minus(a: Int, b: Int): Int {
+    fun minus(a: Float, b: Float): Float {
         val result = a - b
         println("$a - $b = $result")
         return result
     }
 
-    public fun multiply(a: Int, b: Int): Int {
+    fun multiply(a: Float, b: Float): Float {
         val result = a * b
         println("$a x $b = $result")
         return result
     }
 
-    public fun divide(a: Int, b: Int): Int {
+    fun divide(a: Float, b: Float): Float {
         val result = a / b
+        if (result.isInfinite()) {
+            println("$a / $b = $result")
+            println("That right there is illegal math an this calculator wants no part of it :)")
+            exitProcess(1)
+        }
         println("$a / $b = $result")
         return result
     }
