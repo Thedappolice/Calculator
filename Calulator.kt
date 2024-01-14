@@ -6,7 +6,7 @@ fun main() {
 
     fun checkType(input: Any) {
         if (input !is Int) {
-            println("One is unsure if it was an accident, there was text, and onr will not be held\nresponsible for thy foolishness to feed it text when it clearly asked for numbers.\nIn which you failed to deliver, Spectacularly.")
+            println("One is unsure if it was an accident, there was text, and one will not be held\nresponsible for thy foolishness to feed it text when it clearly asked for numbers.\nIn which you failed to deliver, Spectacularly.")
             exitProcess(1)
         }
     }
