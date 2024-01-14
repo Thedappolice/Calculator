@@ -4,11 +4,14 @@ import kotlin.system.exitProcess
 
 fun main() {
 
-    fun checkType(input: Any) {
-        if (input !is Int) {
+    fun checkerror(input: Any): Float {
+        try {
+            input.toString().toFloat()
+        } catch (e: NumberFormatException) {
             println("One is unsure if it was an accident, there was text, and one will not be held\nresponsible for thy foolishness to feed it text when it clearly asked for numbers.\nIn which you failed to deliver, Spectacularly.")
             exitProcess(1)
         }
+        return input.toString().toFloat()
     }
 
     val calculator = Calculator()
@@ -65,13 +68,11 @@ fun main() {
 
         println("First number :")
         number1 = readln()
-        checkType(number1)
-        number1 = number1.toFloat()
+        number1 = checkerror(number1)
 
         println("Second number :")
         number2 = readln()
-        checkType(number2)
-        number2 = number2.toFloat()
+        number2 = checkerror(number2)
 
         when (mode) {
             1 -> {
@@ -111,7 +112,6 @@ fun main() {
                 }
             }
         }
-
     }
 }
 
